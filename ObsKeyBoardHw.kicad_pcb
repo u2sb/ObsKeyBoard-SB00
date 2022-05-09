@@ -5,6 +5,12 @@
   )
 
   (paper "A3")
+  (title_block
+    (title "OBS导播键盘")
+    (date "2022-05-09")
+    (company "U2SB")
+  )
+
   (layers
     (0 "F.Cu" signal)
     (31 "B.Cu" signal)
