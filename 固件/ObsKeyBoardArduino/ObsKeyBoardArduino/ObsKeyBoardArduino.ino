@@ -4,21 +4,31 @@
  Author:	mc
 */
 
+#include <USB.h>
 #include <bc_key_scan.h>
 #include <SoftwareSerial.h>
 #include <ESPRotary.h>
 #include <map>
 
-SoftwareSerial swSerial(4, 5);
+
+#if ARDUINO_USB_CDC_ON_BOOT
+#define HWSerial Serial0
+#define USBSerial Serial
+#else
+#define HWSerial Serial
+USBCDC USBSerial;
+#endif
+
+SoftwareSerial swSerial(1, 2);
 
 BcKeyScan Keypad(swSerial);
 
-ESPRotary r00 = ESPRotary(6, 7);
-ESPRotary r01 = ESPRotary(8, 9);
-ESPRotary r02 = ESPRotary(10, 11);
-ESPRotary r10 = ESPRotary(16, 17);
-ESPRotary r11 = ESPRotary(18, 19);
-ESPRotary r12 = ESPRotary(20, 21);
+ESPRotary r00 = ESPRotary(3, 4);
+ESPRotary r01 = ESPRotary(5, 6);
+ESPRotary r02 = ESPRotary(7, 8);
+ESPRotary r10 = ESPRotary(13, 14);
+ESPRotary r11 = ESPRotary(15, 16);
+ESPRotary r12 = ESPRotary(17, 18);
 
 /**
  * \brief °´¼ü±í
@@ -104,7 +114,8 @@ void outKey(byte keyValue)
 			return;
 		}
 	}
-	Serial.write(a, sizeof(a));
+	USBSerial.write(a, sizeof(a));
+	HWSerial.write(a, sizeof(a));
 }
 
 /**
@@ -126,7 +137,8 @@ void outEncoder(byte direction, byte encoderValue)
 	default:
 		return;
 	}
-	Serial.write(a, sizeof(a));
+	USBSerial.write(a, sizeof(a));
+	HWSerial.write(a, sizeof(a));
 }
 
 void r00RotationHandler(ESPRotary& r)
@@ -157,7 +169,12 @@ void r12RotationHandler(ESPRotary& r)
 // the setup function runs once when you press reset or power the board
 void setup()
 {
-	Serial.begin(115200);
+	HWSerial.begin(115200);
+	HWSerial.setDebugOutput(true);
+
+	USBSerial.begin();
+	USB.begin();
+
 	swSerial.begin(9600);
 	Keypad.setDetectMode(1);
 

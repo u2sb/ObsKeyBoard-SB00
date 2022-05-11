@@ -29,7 +29,7 @@
 #define ESP32
 #define CORE_DEBUG_LEVEL 0
 #define ARDUINO_USB_MODE 0
-#define ARDUINO_USB_CDC_ON_BOOT 0
+#define ARDUINO_USB_CDC_ON_BOOT 1
 #define ARDUINO_USB_MSC_ON_BOOT 0
 #define ARDUINO_USB_DFU_ON_BOOT 0
 #define __cplusplus 201103L
