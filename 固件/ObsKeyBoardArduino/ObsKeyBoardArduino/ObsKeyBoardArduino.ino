@@ -1,7 +1,7 @@
 /*
  Name:		ObsKeyBoardArduino.ino
  Created:	2022/5/9 15:17:28
- Author:	mc
+ Author:	MonoLogueChi
 */
 
 #include <USB.h>
