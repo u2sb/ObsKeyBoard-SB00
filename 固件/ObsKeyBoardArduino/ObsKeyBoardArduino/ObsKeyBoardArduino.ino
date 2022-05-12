@@ -31,7 +31,7 @@ ESPRotary r11 = ESPRotary(15, 16);
 ESPRotary r12 = ESPRotary(17, 18);
 
 /**
- * \brief °´¼ü±í
+ * \brief æŒ‰é”®è¡¨
  */
 std::map<byte, byte> keyBoardValue{
 	{0x00, 0x00},
@@ -54,7 +54,7 @@ std::map<byte, byte> keyBoardValue{
 };
 
 /**
- * \brief ±àÂëÆ÷°´¼ü±í
+ * \brief ç¼–ç å™¨æŒ‰é”®è¡¨
  */
 std::map<byte, byte> encoderValue{
 	{0x03, 0x00},
@@ -67,7 +67,7 @@ std::map<byte, byte> encoderValue{
 };
 
 /**
- * \brief Êä³ö¼üÖµ
+ * \brief è¾“å‡ºé”®å€¼
  * \param keyValue 
  */
 void outKey(byte keyValue)
@@ -90,9 +90,9 @@ void outKey(byte keyValue)
 
 	if (it != keyBoardValue.end())
 	{
-		//ÉèÖÃÀàĞÍÎª°´¼ü
+		//è®¾ç½®ç±»å‹ä¸ºæŒ‰é”®
 		a[2] = 0x01;
-		//ÉèÖÃ°´¼üÎ»
+		//è®¾ç½®æŒ‰é”®ä½
 		a[3] = keyBoardValue[keyValue0];
 	}
 	else
@@ -100,13 +100,13 @@ void outKey(byte keyValue)
 		it = encoderValue.find(keyValue0);
 		if (it != encoderValue.end())
 		{
-			//ÉèÖÃÀàĞÍÎª±àÂëÆ÷ 0x02
+			//è®¾ç½®ç±»å‹ä¸ºç¼–ç å™¨ 0x02
 			a[2] = 0x02;
 
-			//ÉèÖÃ±àÂëÆ÷Î»
+			//è®¾ç½®ç¼–ç å™¨ä½
 			a[3] = encoderValue[keyValue0];
 
-			//ÉèÖÃ±àÂëÆ÷Öµ
+			//è®¾ç½®ç¼–ç å™¨å€¼
 			a[4] = a[4] + 0x02;
 		}
 		else
@@ -119,9 +119,9 @@ void outKey(byte keyValue)
 }
 
 /**
- * \brief Êä³ö±àÂëÆ÷Öµ
- * \param direction ·½Ïò
- * \param encoderValue ±àÂëÆ÷Î»ÖÃ
+ * \brief è¾“å‡ºç¼–ç å™¨å€¼
+ * \param direction æ–¹å‘
+ * \param encoderValue ç¼–ç å™¨ä½ç½®
  */
 void outEncoder(byte direction, byte encoderValue)
 {
