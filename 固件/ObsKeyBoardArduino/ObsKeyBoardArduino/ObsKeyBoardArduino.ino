@@ -59,11 +59,11 @@ std::map<byte, byte> keyBoardValue{
 std::map<byte, byte> encoderValue{
 	{0x03, 0x00},
 	{0x0A, 0x01},
-	{0x011, 0x02},
+	{0x11, 0x02},
 
-	{0x04, 0x10},
-	{0x0B, 0x11},
-	{0x12, 0x12}
+	{0x04, 0x05},
+	{0x0B, 0x06},
+	{0x12, 0x07}
 };
 
 /**
@@ -155,15 +155,15 @@ void r02RotationHandler(ESPRotary& r)
 }
 void r10RotationHandler(ESPRotary& r)
 {
-	outEncoder(r.getDirection(), 0x10);
+	outEncoder(r.getDirection(), 0x05);
 }
 void r11RotationHandler(ESPRotary& r)
 {
-	outEncoder(r.getDirection(), 0x11);
+	outEncoder(r.getDirection(), 0x06);
 }
 void r12RotationHandler(ESPRotary& r)
 {
-	outEncoder(r.getDirection(), 0x12);
+	outEncoder(r.getDirection(), 0x07);
 }
 
 // the setup function runs once when you press reset or power the board
