@@ -1,0 +1,11 @@
+BcKeyScan	KEYWORD1
+isKeyChanged	KEYWORD2
+getKeyValue	KEYWORD2
+setDetectMode	KEYWORD2
+setLongpressCount	KEYWORD2
+defCombinedKey	KEYWORD2
+defLongpressKey	KEYWORD2
+setCallback	KEYWORD2
+longpressTick	KEYWORD2
+checkChanges	KEYWORD2
+
