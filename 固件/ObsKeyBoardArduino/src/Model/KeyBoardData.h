@@ -1,16 +1,19 @@
 #include <Arduino.h>
 #include <map>
+#include <MsgPacketizer.h>
 
 struct CustomKeyBoardData
 {
     uint8_t address;
     uint16_t data;
+    MSGPACK_DEFINE(address, data);
 };
 
 struct KeyBoardInputData
 {
     uint8_t type;
     CustomKeyBoardData data;
+    MSGPACK_DEFINE(type, data);
 };
 
 /// @brief 按键表

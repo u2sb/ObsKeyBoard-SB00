@@ -1,18 +1,17 @@
 #include <Arduino.h>
 #include <USB.h>
-#include <ArduinoJson.h>
 #include <bc_key_scan.h>
 #include <ESPRotary.h>
 #include <SoftwareSerial.h>
 
-#include "Model/KeyBoardData.h"
+#include "model/KeyBoardData.h"
 
 #if ARDUINO_USB_CDC_ON_BOOT
 #define HWSerial Serial0
-#define USBSerial Serial
+#define USerial Serial
 #else
 #define HWSerial Serial
-USBCDC USBSerial;
+USBCDC USerial;
 #endif
 
 SoftwareSerial swSerial(1, 2);
@@ -25,17 +24,14 @@ ESPRotary r10 = ESPRotary(13, 14);
 ESPRotary r11 = ESPRotary(15, 16);
 ESPRotary r12 = ESPRotary(17, 18);
 
-StaticJsonDocument<1024> doc;
 CustomKeyBoardData KeyBoardData;
 KeyBoardInputData InputData;
 
+byte send_index = 0x1C;
+
 void KeyDataOutput()
 {
-  doc.clear();
-  doc["type"] = InputData.type;
-  doc["data"]["address"] = InputData.data.address;
-  doc["data"]["data"] = InputData.data.data;
-  serializeJson(doc, USBSerial);
+  MsgPacketizer::send(USerial, send_index, InputData);
 }
 
 void BcKeyInit()
@@ -67,9 +63,9 @@ void BcKeyUpdate()
 
     if (it != keyBoardValue.end())
     {
-      //设置类型为按键
+      // 设置类型为按键
       InputData.type = Key;
-      //设置按键位
+      // 设置按键位
       KeyBoardData.address = keyBoardValue[keyValue0];
     }
     else
@@ -77,13 +73,13 @@ void BcKeyUpdate()
       it = encoderValue.find(keyValue0);
       if (it != encoderValue.end())
       {
-        //设置类型为编码器 0x02
+        // 设置类型为编码器 0x02
         InputData.type = Encoder;
 
-        //设置编码器位
+        // 设置编码器位
         KeyBoardData.address = encoderValue[keyValue0];
 
-        //设置编码器值
+        // 设置编码器值
         KeyBoardData.data = KeyBoardData.data + 0x02;
       }
       else
@@ -186,15 +182,20 @@ void setup()
   HWSerial.begin(115200);
   HWSerial.setDebugOutput(true);
 
-  USBSerial.begin();
+  USerial.begin();
   USB.begin();
 
   BcKeyInit();
   RotaryInit();
 }
 
+uint8_t buffer[128];
+size_t message_length;
+bool status;
+
 void loop()
 {
   BcKeyUpdate();
   RotaryUpdate();
+  MsgPacketizer::update();
 }

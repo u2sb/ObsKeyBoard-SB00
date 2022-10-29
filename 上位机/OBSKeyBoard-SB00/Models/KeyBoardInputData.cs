@@ -1,15 +1,19 @@
-﻿namespace OBSKeyBoard_SB00.Models;
+﻿using MessagePack;
 
+namespace OBSKeyBoard_SB00.Models;
+
+[MessagePackObject]
 public class KeyBoardInputData
 {
-    public CustomEventType Type { get; set; }
-    public CustomKeyBoardData Data { get; set; } = new();
+    [Key(0)] public CustomEventType Type { get; set; }
+    [Key(1)] public CustomKeyBoardData Data { get; set; } = new();
 }
 
+[MessagePackObject]
 public class CustomKeyBoardData
 {
-    public int Address { get; set; }
-    public int Data { get; set; }
+    [Key(0)] public int Address { get; set; }
+    [Key(1)] public int Data { get; set; }
 }
 
 /// <summary>
