@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using MessagePack;
+﻿using MessagePack;
 using OBSKeyBoard_SB00.Models;
 
 namespace OBSKeyBoard_SB00.Utils;
@@ -32,7 +30,7 @@ public class KeyBoardHelp : Singleton<KeyBoardHelp>
     {
         lock (Lock)
         {
-            var d = COBSCodec.decode(bytes).Skip(1).SkipLast(1).ToArray();
+            var d = COBS.Decode(bytes).Skip(1).SkipLast(1).ToArray();
             var data = MessagePackSerializer.Deserialize<KeyBoardInputData>(d);
             if (data != null && data.Type != CustomEventType.None)
                 switch (data.Type)

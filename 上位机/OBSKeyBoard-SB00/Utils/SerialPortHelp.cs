@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using RJCP.IO.Ports;
+﻿using RJCP.IO.Ports;
 
 namespace OBSKeyBoard_SB00.Utils;
 
@@ -24,7 +22,6 @@ public class SerialPortHelp : Singleton<SerialPortHelp>
             {
                 var size = _sp.BytesToRead;
                 var buff = new byte[size];
-                _ = _sp.Read(buff, 0, size);
                 _sp.ReadAsync(buff, 0, size).ContinueWith(i =>
                 {
                     lock (_queueLock)
@@ -96,7 +93,7 @@ public class SerialPortHelp : Singleton<SerialPortHelp>
     {
         lock (Lock)
         {
-            _sp.WriteAsync(data, 0, data.Length);
+            _sp.Write(data, 0, data.Length);
         }
     }
 
