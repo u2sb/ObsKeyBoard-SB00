@@ -27,7 +27,8 @@ ESPRotary r12 = ESPRotary(17, 18);
 CustomKeyBoardData KeyBoardData;
 KeyBoardInputData InputData;
 
-byte send_index = 0x1C;
+// 定义索引
+const byte send_index = 0x00;
 
 void KeyDataOutput()
 {
@@ -188,10 +189,6 @@ void setup()
   BcKeyInit();
   RotaryInit();
 }
-
-uint8_t buffer[128];
-size_t message_length;
-bool status;
 
 void loop()
 {

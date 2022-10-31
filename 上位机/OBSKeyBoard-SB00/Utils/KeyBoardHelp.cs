@@ -1,4 +1,5 @@
-﻿using MessagePack;
+﻿using Algorithm.Check;
+using MessagePack;
 using OBSKeyBoard_SB00.Models;
 
 namespace OBSKeyBoard_SB00.Utils;
@@ -30,8 +31,13 @@ public class KeyBoardHelp : Singleton<KeyBoardHelp>
     {
         lock (Lock)
         {
-            var d = COBS.Decode(bytes).Skip(1).SkipLast(1).ToArray();
-            var data = MessagePackSerializer.Deserialize<KeyBoardInputData>(d);
+            var d = COBS.Decode(bytes);
+            var index = d[0];
+            if (index != 0) return;
+            var crc = d.Last();
+            var mp = d.Skip(1).SkipLast(1).ToArray();
+            if (crc != d.SkipLast(1).CRC8()) return;
+            var data = MessagePackSerializer.Deserialize<KeyBoardInputData>(mp);
             if (data != null && data.Type != CustomEventType.None)
                 switch (data.Type)
                 {

@@ -13,8 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CheckSum.CRC" Version="2.0.1" />
     <PackageReference Include="MessagePack" Version="2.4.35" />
-    <PackageReference Include="obs-websocket-dotnet" Version="5.0.0.2" />
+    <PackageReference Include="obs-websocket-dotnet" Version="5.0.0.3" />
     <PackageReference Include="SerialPortStream" Version="2.4.0" />
   </ItemGroup>
 
